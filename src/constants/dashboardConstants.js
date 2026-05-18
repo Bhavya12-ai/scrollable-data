@@ -9,7 +9,7 @@ export const LABELS = {
 };
 
 export const STYLES = {
-  container: { width: "40%" },
+  container: { width: "100%" },
   selectedCard: { background: "#e3f2fd" },
   defaultCard: { background: "#f5f5f5" },
   clickableText: { color: "blue" },

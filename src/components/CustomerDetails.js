@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import TransactionList from "./TransactionList";
-import '../common.css'
+import '../app.css'
 export default function CustomerDetails({ customer, details }) {
   const [showTransactions, setShowTransactions] = useState(false);
 

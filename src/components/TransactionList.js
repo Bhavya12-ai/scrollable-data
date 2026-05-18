@@ -1,5 +1,5 @@
 import React from "react";
-import "../common.css";
+import "../app.css";
 export default function TransactionList({ transactions }) {
   return (
     <div className="transactionList-container">
@@ -11,4 +11,3 @@ export default function TransactionList({ transactions }) {
     </div>
   );
 }
-``

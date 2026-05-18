@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { fetchTransactions } from "../services/Api";
 import { totalPrice } from "../utils/Rewards";
-import CustomerPage from "./CustomerPage";
+import CustomerDetails from "./CustomerDetails";
 import { LABELS, STYLES } from "../constants/dashboardConstants";
-import "../common.css";
+import "../app.css";
 
 function DashboardPage() {
   const [customers, setCustomers] = useState({});
@@ -46,25 +46,30 @@ function DashboardPage() {
       </div>
 
       {showTable && (
-        <div className="card-wrapper">
-          <h3>{LABELS.SUMMARY}</h3>
-          {Object.entries(customers).map(([name, data]) => (
-            <div
-              key={name}
-              onClick={() => setSelectedCustomer(name)}
-              className="section-details"
-              style={selectedCustomer === name? STYLES.selectedCard : STYLES.defaultCard} >
-              <p>{name}</p>
-              <p>ID: {data?.customerID ?? "-"}</p>
-              <p>Points: {data?.total ?? 0}</p>
-              <p>Amount: {data?.totalAmount ?? 0}</p>
-            </div>
-          ))}
-        </div>
-      )}
+        <div className="dashboard-content">
+          <div className="card-wrapper">
+            <h3>{LABELS.SUMMARY}</h3>
+            {Object.entries(customers).map(([name, data]) => (
+              <div
+                key={name}
+                onClick={() => setSelectedCustomer(name)}
+                className="section-details"
+                style={selectedCustomer === name? STYLES.selectedCard : STYLES.defaultCard} >
+                <p>{name}</p>
+                <p>ID: {data?.customerID ?? "-"}</p>
+                <p>Points: {data?.total ?? 0}</p>
+                <p>Amount: {data?.totalAmount ?? 0}</p>
+              </div>
+            ))}
+          </div>
 
-      {selectedCustomer && customers[selectedCustomer] && (
-        <CustomerPage customerName={selectedCustomer} customerData={customers[selectedCustomer]} />
+          {selectedCustomer && customers[selectedCustomer] && (
+            <div className="customer-details-panel">
+              <h2>{selectedCustomer}</h2>
+              <CustomerDetails customer={selectedCustomer} details={customers[selectedCustomer]} />
+            </div>
+          )}
+        </div>
       )}
     </div>
   );
