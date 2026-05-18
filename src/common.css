@@ -1,0 +1,49 @@
+.dashboard-header {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.card-wrapper {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    max-height: 250px;
+    overflow-y: auto;
+}
+.section-details {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.customerDetails-container {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin: 10px 0;
+    padding: 10px;
+}
+.details-button {
+    margin-top: 10px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    background: blue;
+    color: white;
+    cursor: pointer;
+}
+.transactionDetails-container {
+    margin-top: 15px;
+    background: #fff;
+    border-radius: 8px;
+    padding: 12px;
+}
+.transactionList-container {
+    height: 150px;
+    overflow-y: auto;
+    border-top: 1px solid #ddd;
+    margin-top: 10px;
+}
