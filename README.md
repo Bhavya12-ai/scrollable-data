@@ -16,14 +16,6 @@ A small React application that displays customer reward points and transaction d
 
 #Api.js -  Simulates async loading of transaction data with a promise.
 
-#approach
-
-1. Load all transactions from `fetchTransactions()`.
-2. Use `totalPrice()` to aggregate transactions by customer name.
-3. Compute reward points per transaction and accumulate totals.
-4. Store customer data in dashboard state and render a selectable summary list.
-5. When a customer is selected, pass the exact aggregated object to `CustomerPage`.
-6. Render a reusable `CustomerDetails` component for the selected customer.
 
 #Run the app
 
