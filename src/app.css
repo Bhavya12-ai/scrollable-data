@@ -91,3 +91,7 @@ body{
     margin-top: 0;
     margin-bottom: 10px;
 }
+.transaction-details{
+    padding:10px;
+    border-bottom:1px solid #eee;
+}
