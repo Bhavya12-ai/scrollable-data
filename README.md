@@ -12,7 +12,7 @@ A small React application that displays customer reward points and transaction d
 
 #Rewards.js - Contains reward calculation logic. Aggregates customer totals, monthly points, and transaction arrays.Ensures customer ID and total amount are preserved per customer.
 
-#transactionData.js - Static transaction data used by the app. Includes `customerID`, `customerName`, `amount`, and `date`.
+#transactionData.js - Static transaction data used by the app. Includes 'customerID', 'customerName', 'amount', and 'date'.
 
 #Api.js -  Simulates async loading of transaction data with a promise.
 
