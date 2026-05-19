@@ -2,22 +2,26 @@ import React, { useState } from "react";
 import TransactionList from "./TransactionList";
 import '../app.css'
 export default function CustomerDetails({ customer, details }) {
-  const [showTransactions, setShowTransactions] = useState(false);
-
+  const [showTransactions, setShowTransactions] = useState(false);  
   if (!details) return null;
 
   return (
     <div className="customerDetails-container">
-      <div>
-        <h3>{customer}</h3>
+      <div className="customerSummary-container">
+        <h3>{customer}</h3>        
+          
+        <div className="customerSummary">
         <p>ID: {details.customerID}</p>
         <p>Total Reward: {details.total} points</p>
         <p>Total Spent: ${details.totalAmount}</p>
-
+        </div>
+        <div className="monthlyRewards">
         {Object.entries(details.months).map(([month, points]) => (
           <p key={month}>{month}: {points} points</p>
         ))}
-
+        </div>
+        
+      </div>
         <button
           type="button"
           onClick={() => setShowTransactions((prev) => !prev)}
@@ -25,8 +29,6 @@ export default function CustomerDetails({ customer, details }) {
           >
           {showTransactions ? "Hide Details" : "Show Details"}
         </button>
-      </div>
-
       {showTransactions && (
         <div className="transactionDetails-container">
           <h4 className="transaction-header"> Transaction Details</h4>

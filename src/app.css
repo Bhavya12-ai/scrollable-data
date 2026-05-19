@@ -2,6 +2,9 @@
 body{
     width:100%;
     height:100%;
+    font-family:sans-serif;
+    background:#f0f2f5;
+    margin:0;
 }
 .dashboard-header {
     background: white;
@@ -10,6 +13,7 @@ body{
     cursor: pointer;
     margin-bottom: 20px;
     text-align: center;
+    border: 1px solid #000;
 }
 .dashboard-content {
     display: flex;
@@ -25,6 +29,16 @@ body{
     overflow-y: auto;
     flex: 1;
     min-width: 300px;
+}
+.card-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+.card-input{
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
 }
 .section-details {
     padding: 10px;
@@ -47,6 +61,10 @@ body{
     border-radius: 8px;
     margin: 10px 0;
     padding: 10px;
+}
+.customerSummary-container{
+    display:flex;
+    gap:50px;
 }
 .details-button {
     margin-top: 10px;

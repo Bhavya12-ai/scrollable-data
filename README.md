@@ -12,6 +12,8 @@ A small React application that displays customer reward points and transaction d
 
 #Rewards.js - Contains reward calculation logic. Aggregates customer totals, monthly points, and transaction arrays.Ensures customer ID and total amount are preserved per customer.
 
+#useRewards.js - Custom React hook that memoizes reward aggregation for a transaction list. Wraps totalPrice and returns customer reward summaries for dashboard and customer views.
+
 #transactionData.js - Static transaction data used by the app. Includes 'customerID', 'customerName', 'amount', and 'date'.
 
 #Api.js -  Simulates async loading of transaction data with a promise.
@@ -37,10 +39,10 @@ npx react-scripts test --watchAll=false
 ![alt text](image.png)
 
 #customaer page
-![alt text](image-2.png)
+![alt text](image-5.png)
 
 #customer Details
-![alt text](image-3.png)
+![alt text](image-6.png)
 
 #Transaction List view
 ![alt text](image-4.png)

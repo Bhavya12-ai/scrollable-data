@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { fetchTransactions } from "../services/Api";
-import { totalPrice } from "../utils/Rewards";
+import { useRewards } from "../utils/useRewards";
 import CustomerDetails from "./CustomerDetails";
 import { LABELS, STYLES } from "../constants/dashboardConstants";
 import "../app.css";
 
 function DashboardPage() {
-  const [customers, setCustomers] = useState({});
+  const [transactions, setTransactions] = useState([]);
   const [showTable, setShowTable] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [rewardPeriod, setRewardPeriod] = useState("");
   const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState("");
+  const customers = useRewards(transactions);
 
   useEffect(() => {
     fetchTransactions().then((transactions) => {
-      const mappedCustomers = totalPrice(transactions);
-      setCustomers(mappedCustomers);
+      setTransactions(transactions);
 
       if (transactions.length) {
         const dates = transactions.map((item) => new Date(item.date));
@@ -35,6 +36,16 @@ function DashboardPage() {
     0
   );
 
+  const searchRandom = search.trim().toLowerCase();
+  const filteredCustomers = Object.entries(customers).filter(([name, data]) => {
+    if (!searchRandom) return true;
+    return (
+      name.toLowerCase().includes(searchRandom) || String(data.customerID).toLowerCase().includes(searchRandom)
+    );
+  });
+
+  const selectedCustomerData = selectedCustomer && filteredCustomers.some(([name]) => name === selectedCustomer) ? customers[selectedCustomer] : null;
+
   return (
     <div style={STYLES.container}>
       <div onClick={() => setShowTable(!showTable)} className="dashboard-header">
@@ -48,25 +59,32 @@ function DashboardPage() {
       {showTable && (
         <div className="dashboard-content">
           <div className="card-wrapper">
-            <h3>{LABELS.SUMMARY}</h3>
-            {Object.entries(customers).map(([name, data]) => (
-              <div
-                key={name}
-                onClick={() => setSelectedCustomer(name)}
-                className="section-details"
-                style={selectedCustomer === name? STYLES.selectedCard : STYLES.defaultCard} >
-                <p>{name}</p>
-                <p>ID: {data?.customerID ?? "-"}</p>
-                <p>Points: {data?.total ?? 0}</p>
-                <p>Amount: {data?.totalAmount ?? 0}</p>
-              </div>
-            ))}
+            <div className="card-header">
+              <h3>{LABELS.SUMMARY}</h3>
+              <input type="text" className="card-input" placeholder="Search transactions" value={search} onChange={(e) => setSearch(e.target.value)} />
+            </div>
+            {filteredCustomers.length === 0 ? (
+              <p style={{ padding: "12px 0" }}>No customers found.</p>
+            ) : (
+              filteredCustomers.map(([name, data]) => (
+                <div
+                  key={name}
+                  onClick={() => setSelectedCustomer(name)}
+                  className="section-details"
+                  style={selectedCustomer === name ? STYLES.selectedCard : STYLES.defaultCard} >
+                  <p>{name}</p>
+                  <p>ID: {data?.customerID ?? "-"}</p>
+                  <p>Points: {data?.total ?? 0}</p>
+                  <p>Amount: {data?.totalAmount ?? 0}</p>
+                </div>
+              ))
+            )}
           </div>
 
-          {selectedCustomer && customers[selectedCustomer] && (
+          {selectedCustomerData && (
             <div className="customer-details-panel">
               <h2>{selectedCustomer}</h2>
-              <CustomerDetails customer={selectedCustomer} details={customers[selectedCustomer]} />
+              <CustomerDetails customer={selectedCustomer} details={selectedCustomerData} />
             </div>
           )}
         </div>
