@@ -29,7 +29,7 @@ export default function CustomerDetails({ customer, details }) {
 
       {showTransactions && (
         <div className="transactionDetails-container">
-          <h4 style={{ marginTop: 0, marginBottom: "10px" }}> Transaction Details</h4>
+          <h4 className="transaction-header"> Transaction Details</h4>
           <TransactionList transactions={details.transactions} />
         </div>
       )}
