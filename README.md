@@ -45,4 +45,4 @@ npx react-scripts test --watchAll=false
 ![alt text](image-6.png)
 
 #Transaction List view
-![alt text](image-4.png)
+![alt text](image-2.png)
