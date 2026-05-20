@@ -17,7 +17,7 @@ function DashboardPage() {
   useEffect(() => {
     fetchTransactions().then((transactions) => {
       setTransactions(transactions);
-
+      console.log(transactions);
       if (transactions.length) {
         const dates = transactions.map((item) => new Date(item.date));
         const minDate = new Date(Math.min(...dates));
