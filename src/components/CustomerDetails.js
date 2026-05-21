@@ -22,7 +22,6 @@ export default function CustomerDetails({ customer, details }) {
     <div className="customerDetails-container">
       <div className="customerSummary-container">
         <h3>{customer}</h3>
-
         <div className="customerSummary">
           <p>ID: {details.customerID}</p>
           <p>Total Reward: {details.total} points</p>
@@ -30,7 +29,7 @@ export default function CustomerDetails({ customer, details }) {
         </div>
         <div className="monthlyRewards">
           {Object.entries(details.months).map(([month, points]) => (
-            <div key={month} style={{ marginBottom: "8px" }}>
+            <div key={month} className="monthly-reward">
               <p className="monthly-view">
                 {month}: {points} points
               </p>
@@ -41,9 +40,7 @@ export default function CustomerDetails({ customer, details }) {
                   setSelectedMonth((prev) => (prev === month ? null : month))
                 }
               >
-                {selectedMonth === month
-                  ? "Hide Transactions"
-                  : "View Transactions"}
+                {selectedMonth === month ? "Hide Transactions" : "View Transactions"}
               </button>
             </div>
           ))}
