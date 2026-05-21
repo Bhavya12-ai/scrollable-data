@@ -15,6 +15,7 @@ function DashboardPage() {
   const customers = useRewards(transactions);
 
   useEffect(() => {
+    setLoading(true);
     fetchTransactions().then((transactions) => {
       setTransactions(transactions);
       console.log(transactions);
@@ -29,6 +30,7 @@ function DashboardPage() {
       setLoading(false);
     });
   }, []);
+  if(loading) return <h3 style={{ padding: "20px" }}>Loading transactions...</h3>;
 
   const totalCustomers = Object.keys(customers).length;
   const totalRewardPoints = Object.values(customers).reduce(
