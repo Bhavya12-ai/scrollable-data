@@ -35,18 +35,21 @@ function DashboardPage() {
   const totalCustomers = Object.keys(customers).length;
   const totalRewardPoints = Object.values(customers).reduce(
     (sum, customer) => sum + (customer.total || 0),
-    0
+    0,
   );
 
   const searchRandom = search.trim().toLowerCase();
-  const filteredCustomers = Object.entries(customers).filter(([name, data]) => {
-    if (!searchRandom) return true;
-    return (
-      name.toLowerCase().includes(searchRandom) || String(data.customerID).toLowerCase().includes(searchRandom)
-    );
-  });
+  const filteredCustomers = useMemo(() => {
+    return Object.entries(customers).filter(([name, data]) => {
+      if (!searchRandom) return true;
+      return (
+        name.toLowerCase().includes(searchRandom) || String(data.customerID).toLowerCase().includes(searchRandom)
+      );
+    });
+  }, [customers, searchRandom]);
 
-  const selectedCustomerData = selectedCustomer && filteredCustomers.some(([name]) => name === selectedCustomer) ? customers[selectedCustomer] : null;
+
+  const selectedCustomerData = selectedCustomer && customers[selectedCustomer] ? customers[selectedCustomer] : null;
 
   return (
     <div style={STYLES.container}>
