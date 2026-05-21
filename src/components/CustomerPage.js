@@ -17,7 +17,6 @@ export default function CustomerPage({
 
   useEffect(() => {
     if (!name) return;
-
     if (customerDataProp) {
       setCustomerData(customerDataProp);
       setLoading(false);
@@ -28,7 +27,7 @@ export default function CustomerPage({
   }, [name, customerDataProp, rewards]);
 
   if (!name) return null;
-  if (loading) return <h3 style={{ padding: "20px" }}>Loading customer...</h3>;
+  if (loading) return <h3 style={{ padding: "20px" }}>Loading..</h3>;
 
   return (
     <div style={{ padding: "20px" }}>

@@ -47,8 +47,6 @@ function DashboardPage() {
       );
     });
   }, [customers, searchRandom]);
-
-
   const selectedCustomerData = selectedCustomer && customers[selectedCustomer] ? customers[selectedCustomer] : null;
 
   return (
@@ -78,7 +76,7 @@ function DashboardPage() {
                   className="section-details"
                   style={selectedCustomer === name ? STYLES.selectedCard : STYLES.defaultCard} >
                   <p>{name}</p>
-                  <p>ID: {data?.customerID ?? "-"}</p>
+                  <p>ID: {data?.customerID ?? "0"}</p>
                   <p>Points: {data?.total ?? 0}</p>
                   <p>Amount: {data?.totalAmount ?? 0}</p>
                 </div>
