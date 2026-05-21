@@ -1,34 +1,35 @@
 import React, { useState } from "react";
 import TransactionList from "./TransactionList";
-import '../app.css'
+import PropTypes from "prop-types";
+import "../app.css";
 export default function CustomerDetails({ customer, details }) {
-  const [showTransactions, setShowTransactions] = useState(false);  
+  const [showTransactions, setShowTransactions] = useState(false);
   if (!details) return null;
 
   return (
     <div className="customerDetails-container">
       <div className="customerSummary-container">
-        <h3>{customer}</h3>        
-          
+        <h3>{customer}</h3>
         <div className="customerSummary">
-        <p>ID: {details.customerID}</p>
-        <p>Total Reward: {details.total} points</p>
-        <p>Total Spent: ${details.totalAmount}</p>
+          <p>ID: {details.customerID}</p>
+          <p>Total Reward: {details.total} points</p>
+          <p>Total Spent: ${details.totalAmount}</p>
         </div>
         <div className="monthlyRewards">
-        {Object.entries(details.months).map(([month, points]) => (
-          <p key={month}>{month}: {points} points</p>
-        ))}
+          {Object.entries(details.months).map(([month, points]) => (
+            <p key={month}>
+              {month}: {points} points
+            </p>
+          ))}
         </div>
-        
       </div>
-        <button
-          type="button"
-          onClick={() => setShowTransactions((prev) => !prev)}
-          className="details-button"
-          >
-          {showTransactions ? "Hide Details" : "Show Details"}
-        </button>
+      <button
+        type="button"
+        onClick={() => setShowTransactions((prev) => !prev)}
+        className="details-button"
+      >
+        {showTransactions ? "Hide Details" : "Show Details"}
+      </button>
       {showTransactions && (
         <div className="transactionDetails-container">
           <h4 className="transaction-header"> Transaction Details</h4>
@@ -38,3 +39,19 @@ export default function CustomerDetails({ customer, details }) {
     </div>
   );
 }
+
+CustomerDetails.propTypes = {
+  customer: PropTypes.string.isRequired,
+  details: PropTypes.shape({
+    customerID: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    total: PropTypes.number,
+    totalAmount: PropTypes.number,
+    months: PropTypes.objectOf(PropTypes.number),
+    transactions: PropTypes.arrayOf(
+      PropTypes.shape({
+        amount: PropTypes.number,
+        date: PropTypes.string,
+      }),
+    ),
+  }).isRequired,
+};
