@@ -33,7 +33,7 @@ npm start
 npx react-scripts test --watchAll=false
 
 #TestsPassed
-![alt text](image-1.png)
+![alt text](image-4.png)
 
 #DashboardPage
 ![alt text](image.png)

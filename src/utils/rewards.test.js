@@ -1,4 +1,4 @@
-import { calculateTotal } from './Rewards'; 
+import { calculateTotal } from './rewards'; 
 
 describe('calculateTotal function', () => {
 
@@ -17,7 +17,16 @@ describe('calculateTotal function', () => {
     expect(result).toBe(50);
   });
 
- 
+  test('should calculate points correctly for a whole number above 50', () => {
+    const result = calculateTotal(90);
+    expect(result).toBe(40);
+  });
+
+  test('should calculate points correctly for a fractional amount above 50', () => {
+    const result = calculateTotal(75.5);
+    expect(result).toBe(25.5);
+  });
+
   test('should return 0 when amount is less than or equal to 50', () => {
     const result = calculateTotal(30);
     expect(result).toBe(0);

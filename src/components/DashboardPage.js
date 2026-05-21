@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { fetchTransactions } from "../services/Api";
+import { fetchTransactions } from "../services/api";
 import { useRewards } from "../utils/useRewards";
 import CustomerDetails from "./CustomerDetails";
 import { LABELS, STYLES } from "../constants/dashboardConstants";
@@ -11,25 +11,30 @@ function DashboardPage() {
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [rewardPeriod, setRewardPeriod] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [search, setSearch] = useState("");
   const customers = useRewards(transactions);
 
   useEffect(() => {
     setLoading(true);
+    setError(null);
     fetchTransactions().then((transactions) => {
-      setTransactions(transactions);
-      console.log(transactions);
-      if (transactions.length) {
-        const dates = transactions.map((item) => new Date(item.date));
-        const minDate = new Date(Math.min(...dates));
-        const maxDate = new Date(Math.max(...dates));
-        setRewardPeriod(
-          `${minDate.toLocaleDateString()} - ${maxDate.toLocaleDateString()}`
-        );
-      }
-      setLoading(false);
-    });
-  }, []);  
+        setTransactions(transactions);
+        if (transactions.length) {
+          const dates = transactions.map((item) => new Date(item.date));
+          const minDate = new Date(Math.min(...dates));
+          const maxDate = new Date(Math.max(...dates));
+          setRewardPeriod(`${minDate.toLocaleDateString()} - ${maxDate.toLocaleDateString()}`);
+        }
+      })
+      .catch((fetchError) => {
+        console.error("Failed transactions", fetchError);
+        setError("Please try again later");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
 
   const totalCustomers = Object.keys(customers).length;
   const totalRewardPoints = Object.values(customers).reduce(
@@ -48,7 +53,10 @@ function DashboardPage() {
   }, [customers, searchRandom]);
 
   const selectedCustomerData = selectedCustomer && customers[selectedCustomer] ? customers[selectedCustomer] : null;
-  if(loading) return <h3 style={{ padding: "20px" }}>Loading transactions...</h3>;
+
+  if (loading) return <h3 style={{ padding: "20px" }}>Loading transactions...</h3>;
+  if (error) return <h3 style={{ padding: "20px", color: "red" }}>{error}</h3>;
+
   return (
     <div style={STYLES.container}>
       <div onClick={() => setShowTable(!showTable)} className="dashboard-header">
