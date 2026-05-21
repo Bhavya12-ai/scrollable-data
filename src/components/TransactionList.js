@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import "../app.css";
 export default function TransactionList({ transactions }) {
   return (
@@ -11,3 +12,13 @@ export default function TransactionList({ transactions }) {
     </div>
   );
 }
+
+TransactionList.propTypes = {
+  transactions: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+      amount: PropTypes.number.isRequired,
+      date: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+};
