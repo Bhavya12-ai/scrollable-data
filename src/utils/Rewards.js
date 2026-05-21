@@ -1,14 +1,14 @@
+import { MONTHS } from "../constants/dashboardConstants";
+
 export function calculateTotal(amount) {
   let points = 0;
   if (amount > 100) {
     points += (amount - 100) * 2;
     amount = 100;
   }
-
   if (amount > 50) {
     points += amount - 50;
   }
-
   return points;
 }
 
@@ -17,10 +17,7 @@ export function totalPrice(transactions) {
 
   transactions.forEach((item) => {
     const { customerID, customerName, amount, date } = item;
-
-    const month = new Date(date).toLocaleString("default", {
-      month: "short",
-    });
+    const month = MONTHS[new Date(date).getMonth()];
     console.log(month);
     let points = 0;
 

@@ -42,7 +42,7 @@ npx react-scripts test --watchAll=false
 ![alt text](image-5.png)
 
 #customer Details
-![alt text](image-6.png)
+![alt text](image-3.png)
 
 #Transaction List view
 ![alt text](image-2.png)

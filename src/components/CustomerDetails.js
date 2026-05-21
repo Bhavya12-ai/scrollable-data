@@ -1,15 +1,28 @@
 import React, { useState } from "react";
 import TransactionList from "./TransactionList";
 import PropTypes from "prop-types";
+import { MONTHS } from "../constants/dashboardConstants";
 import "../app.css";
+
 export default function CustomerDetails({ customer, details }) {
   const [showTransactions, setShowTransactions] = useState(false);
+  const [selectedMonth, setSelectedMonth] = useState(null);
   if (!details) return null;
+
+  const monthlyTransactions = selectedMonth
+    ? details.transactions.filter((item) => {
+        const month = MONTHS[new Date(item.date).getMonth()];
+        return month === selectedMonth;
+      })
+    : [];
+
+  console.log("Stored months", Object.keys(details.months));
 
   return (
     <div className="customerDetails-container">
       <div className="customerSummary-container">
         <h3>{customer}</h3>
+
         <div className="customerSummary">
           <p>ID: {details.customerID}</p>
           <p>Total Reward: {details.total} points</p>
@@ -17,41 +30,47 @@ export default function CustomerDetails({ customer, details }) {
         </div>
         <div className="monthlyRewards">
           {Object.entries(details.months).map(([month, points]) => (
-            <p key={month}>
-              {month}: {points} points
-            </p>
+            <div key={month} style={{ marginBottom: "8px" }}>
+              <p className="monthly-view">
+                {month}: {points} points
+              </p>
+              <button
+                type="button"
+                className="details-button"
+                onClick={() =>
+                  setSelectedMonth((prev) => (prev === month ? null : month))
+                }
+              >
+                {selectedMonth === month
+                  ? "Hide Transactions"
+                  : "View Transactions"}
+              </button>
+            </div>
           ))}
         </div>
       </div>
+
+      {selectedMonth && (
+        <div className="transactionDetails-container">
+          <h4 className="transaction-header">{selectedMonth} Transactions</h4>
+          <TransactionList transactions={monthlyTransactions} />
+        </div>
+      )}
+
       <button
         type="button"
         onClick={() => setShowTransactions((prev) => !prev)}
         className="details-button"
       >
-        {showTransactions ? "Hide Details" : "Show Details"}
+        {showTransactions ? "Hide All Details" : "Show All Details"}
       </button>
+
       {showTransactions && (
         <div className="transactionDetails-container">
-          <h4 className="transaction-header"> Transaction Details</h4>
+          <h4 className="transaction-header">All Transactions</h4>
           <TransactionList transactions={details.transactions} />
         </div>
       )}
     </div>
   );
 }
-
-CustomerDetails.propTypes = {
-  customer: PropTypes.string.isRequired,
-  details: PropTypes.shape({
-    customerID: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    total: PropTypes.number,
-    totalAmount: PropTypes.number,
-    months: PropTypes.objectOf(PropTypes.number),
-    transactions: PropTypes.arrayOf(
-      PropTypes.shape({
-        amount: PropTypes.number,
-        date: PropTypes.string,
-      }),
-    ),
-  }).isRequired,
-};

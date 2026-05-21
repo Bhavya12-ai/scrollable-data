@@ -55,7 +55,10 @@ body{
     max-height: 500px;
     overflow-y: auto;
 }
-
+.monthly-view{
+    margin:0px;
+    padding:0px;
+}
 .customerDetails-container {
     border: 1px solid #ccc;
     border-radius: 8px;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { fetchTransactions } from "../services/Api";
 import { useRewards } from "../utils/useRewards";
 import CustomerDetails from "./CustomerDetails";
@@ -29,8 +29,7 @@ function DashboardPage() {
       }
       setLoading(false);
     });
-  }, []);
-  if(loading) return <h3 style={{ padding: "20px" }}>Loading transactions...</h3>;
+  }, []);  
 
   const totalCustomers = Object.keys(customers).length;
   const totalRewardPoints = Object.values(customers).reduce(
@@ -47,8 +46,9 @@ function DashboardPage() {
       );
     });
   }, [customers, searchRandom]);
-  const selectedCustomerData = selectedCustomer && customers[selectedCustomer] ? customers[selectedCustomer] : null;
 
+  const selectedCustomerData = selectedCustomer && customers[selectedCustomer] ? customers[selectedCustomer] : null;
+  if(loading) return <h3 style={{ padding: "20px" }}>Loading transactions...</h3>;
   return (
     <div style={STYLES.container}>
       <div onClick={() => setShowTable(!showTable)} className="dashboard-header">
@@ -75,7 +75,7 @@ function DashboardPage() {
                   onClick={() => setSelectedCustomer(name)}
                   className="section-details"
                   style={selectedCustomer === name ? STYLES.selectedCard : STYLES.defaultCard} >
-                  <p>{name}</p>
+                  <p>{name}</p>                 
                   <p>ID: {data?.customerID ?? "0"}</p>
                   <p>Points: {data?.total ?? 0}</p>
                   <p>Amount: {data?.totalAmount ?? 0}</p>
