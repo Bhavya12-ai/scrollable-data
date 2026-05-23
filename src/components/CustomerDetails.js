@@ -16,8 +16,6 @@ export default function CustomerDetails({ customer, details }) {
       })
     : [];
 
-  console.log("Stored months", Object.keys(details.months));
-
   return (
     <div className="customerDetails-container">
       <div className="customerSummary-container">

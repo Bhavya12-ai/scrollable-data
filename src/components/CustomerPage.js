@@ -30,7 +30,7 @@ export default function CustomerPage({
   if (loading) return <h3 style={{ padding: "20px" }}>Loading..</h3>;
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div className="app-container">
       <h2>{name}</h2>
       <CustomerDetails customer={name} details={customerData} />
     </div>

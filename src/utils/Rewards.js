@@ -18,7 +18,6 @@ export function totalPrice(transactions) {
   transactions.forEach((item) => {
     const { customerID, customerName, amount, date } = item;
     const month = MONTHS[new Date(date).getMonth()];
-    console.log(month);
     let points = 0;
 
     if (amount > 100) {

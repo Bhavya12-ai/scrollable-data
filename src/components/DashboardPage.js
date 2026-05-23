@@ -28,7 +28,6 @@ function DashboardPage() {
         }
       })
       .catch((fetchError) => {
-        console.error("Failed transactions", fetchError);
         setError("Please try again later");
       })
       .finally(() => {
@@ -58,7 +57,7 @@ function DashboardPage() {
   if (error) return <h3 style={{ padding: "20px", color: "red" }}>{error}</h3>;
 
   return (
-    <div style={STYLES.container}>
+    <div className="app-container" style={STYLES.container}>
       <div onClick={() => setShowTable(!showTable)} className="dashboard-header">
         <h2>{LABELS.TITLE}</h2>
         <p>{LABELS.TOTAL_CUSTOMERS}: {totalCustomers}</p>
