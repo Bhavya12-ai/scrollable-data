@@ -10,10 +10,10 @@ export default function CustomerPage({
   customerData: customerDataProp,
 }) {
   const { name: routeName } = useParams();
-  const name = customerName || routeName;
   const [customerData, setCustomerData] = useState(customerDataProp || null);
   const [loading, setLoading] = useState(!customerDataProp);
   const rewards = useRewards(transactions);
+  const name = customerName || routeName;
 
   useEffect(() => {
     if (!name) return;

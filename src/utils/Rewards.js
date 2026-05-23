@@ -12,23 +12,21 @@ export function calculateTotal(amount) {
   return points;
 }
 
+export function formatNumber(value) {
+  if (typeof value !== "number" || Number.isNaN(value)) return value;
+  return Number.isInteger(value) ? value : value.toFixed(2);
+}
+
 export function totalPrice(transactions) {
   const result = {};
 
   transactions.forEach((item) => {
     const { customerID, customerName, amount, date } = item;
     const month = MONTHS[new Date(date).getMonth()];
-    let points = 0;
+    const points = calculateTotal(amount);
 
-    if (amount > 100) {
-      points += (amount - 100) * 2;
-      points += 50;
-    } else if (amount > 50) {
-      points += amount - 50;
-    }
-
-    if (!result[customerName]) {
-      result[customerName] = {
+    if (!result[customerID]) {
+      result[customerID] = {
         customerID,
         customerName,
         months: {},
@@ -38,16 +36,12 @@ export function totalPrice(transactions) {
       };
     }
 
-    if (!result[customerName].customerID) {
-      result[customerName].customerID = customerID;
-    }
+    result[customerID].months[month] =
+      (result[customerID].months[month] || 0) + points;
 
-    result[customerName].months[month] =
-      (result[customerName].months[month] || 0) + points;
-
-    result[customerName].total += points;
-    result[customerName].totalAmount += amount;
-    result[customerName].transactions.push(item);
+    result[customerID].total += points;
+    result[customerID].totalAmount += amount;
+    result[customerID].transactions.push(item);
   });
 
   return result;

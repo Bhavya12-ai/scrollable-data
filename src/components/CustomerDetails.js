@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import TransactionList from "./TransactionList";
 import PropTypes from "prop-types";
 import { MONTHS } from "../constants/dashboardConstants";
+import { formatNumber } from "../utils/rewards";
 import "../app.css";
 
 export default function CustomerDetails({ customer, details }) {
@@ -22,14 +23,14 @@ export default function CustomerDetails({ customer, details }) {
         <h3>{customer}</h3>
         <div className="customerSummary">
           <p>ID: {details.customerID}</p>
-          <p>Total Reward: {details.total} points</p>
-          <p>Total Spent: ${details.totalAmount}</p>
+          <p>Total Reward: {formatNumber(details.total)} points</p>
+          <p>Total Spent: ${formatNumber(details.totalAmount)}</p>
         </div>
         <div className="monthlyRewards">
           {Object.entries(details.months).map(([month, points]) => (
             <div key={month} className="monthly-reward">
               <p className="monthly-view">
-                {month}: {points} points
+                {month}: {formatNumber(points)} points
               </p>
               <button
                 type="button"
@@ -69,3 +70,20 @@ export default function CustomerDetails({ customer, details }) {
     </div>
   );
 }
+
+CustomerDetails.propTypes = {
+  customer: PropTypes.string.isRequired,
+  details: PropTypes.shape({
+    customerID: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    total: PropTypes.number.isRequired,
+    totalAmount: PropTypes.number.isRequired,
+    months: PropTypes.objectOf(PropTypes.number).isRequired,
+    transactions: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+        amount: PropTypes.number.isRequired,
+        date: PropTypes.string.isRequired,
+      }),
+    ).isRequired,
+  }).isRequired,
+};

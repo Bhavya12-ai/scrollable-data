@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "../app.css";
+
 export default function TransactionList({ transactions }) {
   return (
     <div className="transactionList-container">
